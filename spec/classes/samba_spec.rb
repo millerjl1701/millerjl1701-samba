@@ -19,7 +19,14 @@ describe 'samba' do
 
           it { is_expected.to contain_package('samba').with_ensure('present') }
 
-          it { is_expected.to contain_service('samba').with(
+          it { is_expected.to contain_service('nmb').with(
+            'ensure'     => 'stopped',
+            'enable'     => 'false',
+            'hasstatus'  => 'true',
+            'hasrestart' => 'true',
+          ) }
+
+          it { is_expected.to contain_service('smb').with(
             'ensure'     => 'running',
             'enable'     => 'true',
             'hasstatus'  => 'true',

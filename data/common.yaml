@@ -2,6 +2,9 @@
 
 samba::package_ensure: 'present'
 samba::package_name: 'samba'
-samba::service_enable: true
-samba::service_ensure: 'running'
-samba::service_name: 'samba'
+samba::service_nmb_enable: false
+samba::service_nmb_ensure: 'stopped'
+samba::service_nmb_name: 'nmb'
+samba::service_smb_enable: true
+samba::service_smb_ensure: 'running'
+samba::service_smb_name: 'smb'

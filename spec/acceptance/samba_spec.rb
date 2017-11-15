@@ -17,7 +17,12 @@ describe 'samba class' do
       it { should be_installed }
     end
 
-    describe service('samba') do
+    describe service('nmb') do
+      it { should_not be_enabled }
+      it { should_not be_running }
+    end
+
+    describe service('smb') do
       it { should be_enabled }
       it { should be_running }
     end

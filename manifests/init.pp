@@ -5,8 +5,8 @@
 #
 # @param config_dir Specifies the configuration directory.
 # @param config_file Specifies the name of the configuraiton file.
-# @param global_config_template Specifies the template to use for the samba global/special sections.
 # @param global_config Hash containing the global/special section configuration parameters.
+# @param global_config_template Specifies the template to use for the samba global/special sections.
 # @param package_ensure Whether to install the samba package, and/or what version. Values: 'present', 'latest', or a specific version number.
 # @param package_name Specifies the name of the package to install.
 # @param service_nmb_enable Whether to enable the nmb service at boot.
@@ -21,8 +21,8 @@
 class samba (
   Stdlib::Absolutepath       $config_dir             = '/etc/samba',
   String                     $config_file            = 'smb.conf',
-  String                     $global_config_template = 'samba/global.erb',
   Hash                       $global_config          = {},
+  String                     $global_config_template = 'samba/global.erb',
   String                     $package_ensure         = 'present',
   String                     $package_name           = 'samba',
   Boolean                    $service_nmb_enable     = false,

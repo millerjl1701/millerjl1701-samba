@@ -1,2 +1,5 @@
+2017-11-16 Release 1.0.1
+- Fixed lint errors in config.pp
+
 2017-11-16 Release 1.0.0
 - Initial release of the module.

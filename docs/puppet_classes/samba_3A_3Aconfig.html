@@ -127,17 +127,17 @@ class samba::config {
 
   concat { &quot;${samba::config_dir}/${samba::config_file}&quot;:
     ensure =&gt; present,
-    owner   =&gt; &#39;root&#39;,
-    group   =&gt; &#39;root&#39;,
-    mode    =&gt; &#39;0644&#39;,
-    path    =&gt; &quot;${samba::config_dir}/${samba::config_file}&quot;,
+    owner  =&gt; &#39;root&#39;,
+    group  =&gt; &#39;root&#39;,
+    mode   =&gt; &#39;0644&#39;,
+    path   =&gt; &quot;${samba::config_dir}/${samba::config_file}&quot;,
   }
   concat::fragment { &#39;global&#39;:
     target  =&gt; &quot;${samba::config_dir}/${samba::config_file}&quot;,
     order   =&gt; &#39;0_global&#39;,
     content =&gt; template($samba::global_config_template),
   }
-  if ! empty($definitions) {  
+  if ! empty($definitions) {
     concat::fragment { &#39;shares&#39;:
       target  =&gt; &quot;${samba::config_dir}/${samba::config_file}&quot;,
       order   =&gt; &#39;shares&#39;,

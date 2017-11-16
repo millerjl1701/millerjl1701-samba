@@ -15,6 +15,8 @@
 # @param service_smb_enable Whether to enable the smb service at boot.
 # @param service_smb_ensure Whether the smb service should be running.
 # @param service_smb_name Specifies the name of the service to manage.
+# @param shares_definitions Hash containing the shares to be created.
+# @param shares_template Specifies the template to use to construct the shares concat fragment.
 #
 class samba (
   Stdlib::Absolutepath       $config_dir             = '/etc/samba',
@@ -29,6 +31,8 @@ class samba (
   Boolean                    $service_smb_enable     = true,
   Enum['running', 'stopped'] $service_smb_ensure     = 'running',
   String                     $service_smb_name       = 'smb',
+  Hash                       $shares_definitions     = {},
+  String                     $shares_template        = 'samba/shares.erb',
   ) {
   case $::operatingsystem {
     'RedHat', 'CentOS': {

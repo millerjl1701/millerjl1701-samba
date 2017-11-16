@@ -32,6 +32,8 @@ describe 'samba' do
             'order'  => '0_global',
           ) }
 
+          it { is_expected.to_not contain_concat__fragment('shares') }
+
           it { is_expected.to contain_service('nmb').with(
             'ensure'     => 'stopped',
             'enable'     => 'false',
@@ -138,6 +140,19 @@ describe 'samba' do
 
           it { is_expected.to_not contain_service('smb') }
           it { is_expected.to contain_service('foo') }
+        end
+
+        context "samba class with shares_definitions defined in hiera or class parameter" do
+          let(:params){
+            {
+              :shares_definitions => { 'public' => { 'comment' => 'Public Stuff', 'path' => '/home/samba', 'public' => 'yes', 'writable' => 'yes', 'printable' => 'no' }, },
+            }
+          }
+
+          it { is_expected.to contain_concat__fragment('shares').with(
+            'target' => '/etc/samba/smb.conf',
+            'order'  => 'shares',
+          ) }
         end
       end
     end

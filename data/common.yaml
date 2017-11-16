@@ -1,5 +1,9 @@
 ---
 
+lookup_options:
+  samba::shares_definitions:
+    merge: hash
+
 samba::package_ensure: 'present'
 samba::package_name: 'samba'
 samba::service_nmb_enable: false

@@ -4,17 +4,23 @@
 <%   if v.is_a?(Hash) -%>
 [<%=  k %>]
 <%     v.map do |ki, vi| -%>
-<%       if vi.is_a?(Array) -%>
-<%         if ki.start_with?(';') -%>
-;	 <%=        ki[1..-1] %> = <%= vi.join(' ') %>
-<%         else -%>
-	 <%=        ki %> = <%= vi.join(' ') %>
-<%         end -%>
-<%       elsif vi != :undef -%>
-<%         if ki.start_with?(';') -%>
-;	 <%=        ki[1..-1] %> = <%= vi %>
-<%         else -%>
-	 <%=        ki %> = <%= vi %>
+<%       if ki.start_with?('#') -%>
+# <%=        vi %>
+<%       elsif ki.start_with?('__') -%>
+
+<%       else -%>
+<%         if vi.is_a?(Array) -%>
+<%           if ki.start_with?(';') -%>
+;	 <%=          ki[1..-1] %> = <%= vi.join(' ') %>
+<%           else -%>
+	 <%=          ki %> = <%= vi.join(' ') %>
+<%           end -%>
+<%         elsif vi != :undef -%>
+<%           if ki.start_with?(';') -%>
+;	 <%=          ki[1..-1] %> = <%= vi %>
+<%           else -%>
+	 <%=          ki %> = <%= vi %>
+<%           end -%>
 <%         end -%>
 <%       end -%>
 <%     end -%>

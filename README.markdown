@@ -13,30 +13,48 @@ master branch: [![Build Status](https://secure.travis-ci.org/millerjl1701/miller
 1. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
 1. [Limitations - OS compatibility, etc.](#limitations)
 1. [Development - Guide for contributing to the module](#development)
+    * [Contributors](#contributors)
+1. [Credits](#credits)
 
 ## Module Description
 
-If applicable, this section should have a brief description of the technology the module integrates with and what that integration enables. This section should answer the questions: "What does this module *do*?" and "Why would I use it?"
+This module installs, configures, and manages samba without the use of opinionated templates or sets of parameters.
 
-If your module has a range of functionality (installation, configuration, management, etc.) this is the time to mention it.
+For more details on Samba and the capabilities it provides, please see: [https://www.samba.org/](https://www.samba.org/)
+
+There are many good modules to manage samba and winbind already; however, to me it seems they try to do too much. All I needed was to manage the package, config file, and service by driving the data via hiera. This is not to say that the other samba modules are not useful. They are. If you need more added functionality that they provide, by all means do so.
+
+This module is currently written to support samba on CentOS/RedHat 6/7 operating systems. Other operating system support will be added as time permits (Pull requests are welcome. :)
 
 ## Setup
 
 ### What samba affects
 
 * A list of files, packages, services, or operations that the module will alter, impact, or execute on the system it's installed on.
-* This is a great place to stick any warnings.
-* Can be in list or paragraph form.
+* Package(s): samba
+* File: /etc/samba/smb.conf
+* Service(s): smb, nmb
 
-### Setup Requirements **OPTIONAL**
+### Setup Requirements
 
-If your module requires anything extra before setting up (pluginsync enabled, etc.), mention it here.
+This module just configures samba. If you need to configure krb5.conf as a prerequite for samba (allowing for sssd for instance), may I suggest one of the following modules:
+
+* [https://forge.puppet.com/ccin2p3/mit_krb5](https://forge.puppet.com/ccin2p3/mit_krb5)
+* [https://forge.puppet.com/pfmooney/mit_krb5](https://forge.puppet.com/pfmooney/mit_krb5)
+* [https://forge.puppet.com/simp/krb5](https://forge.puppet.com/simp/krb5)
+
+Speaking of, if you are trying to configure sssd for use with samba, may I suggest one of the following modules:
+
+* [https://forge.puppet.com/sgnl05/sssd](https://forge.puppet.com/sgnl05/sssd
+* [https://forge.puppet.com/walkamongus/sssd](https://forge.puppet.com/walkamongus/sssd)
+* [https://forge.puppet.com/simp/sssd](https://forge.puppet.com/simp/sssd)
+* [https://forge.puppet.com/bodgit/sssd](https://forge.puppet.com/bodgit/sssd)
 
 ### Beginning with samba
 
-The very basic steps needed for a user to get the module up and running.
+`include samba` should be all that is needed to install, configure, and start the smb service using the parameters specified by the default smb.conf of the package install.
 
-If your most recent release breaks compatibility or requires particular steps for upgrading, you may wish to include an additional section here: Upgrading (For an example, see http://forge.puppetlabs.com/puppetlabs/firewall).
+This module depends on the [puppetlabs/stdlib](https://github.com/puppetlabs/puppetlabs-stdlib) and [puppetlabs/concat](https://github.com/puppetlabs/puppetlabs-concat) modules.
 
 ## Usage
 
@@ -44,28 +62,25 @@ Put the classes, types, and resources for customizing, configuring, and doing th
 
 ## Reference
 
-This module is setup for the use of Puppet Strings to generate class and parameter documentation. The [Puppet Strings doumentation](https://github.com/puppetlabs/puppet-strings/) provides more details on what Puppet Strings provides and other ways of generating documentaiton output.
+Generated puppet strings documentation with examples is available from [https://millerjl1701.github.io/millerjl1701-samba/](https://millerjl1701.github.io/millerjl1701-samba)
 
-As a quick start, if you are using the gem version of puppet:
+The puppet strings documentation is also included in the /docs folder.
 
-```bash
-gem install puppet-strings
-puppet strings generate manifests/*.pp
-```
+### Public Classes
 
-The puppet strings command should be run from the root of the module directory. The resulting documentation will by default be placed in a docs/ directory within the module.
+* samba: Main class which installs, configures, and manages the smb and nmb services.
 
-If you are setup with the development environment as described in the [CONTRIBUTING document](CONTRIBUTING.md) :
+### Private Classes
 
-```bash
-bundle exec rake strings:generate manifests/*.pp
-```
-
-from within the module directory will generate the documentation as well.
+* samba::install: Class for installation of the samba package.
+* samba::config: Class for construction of the /etc/samba/smb.conf configuration file.
+* samba::service: Class for managing the state of the smb and nmb services.
 
 ## Limitations
 
-This is where you list OS compatibility, version compatibility, etc.
+This module was setup using CentOS 6 and 7 installation and documentation for rules. In time, other operating systems will be added as they have been tested. Pull requests with tests are welcome!
+
+No validation or testing of the resulting /etc/samba/smb.conf file is done. This is left as an exercise for the reader.
 
 ## Development
 
@@ -74,3 +89,7 @@ Please see the [CONTRIBUTING document](CONTRIBUTING.md) for information on how t
 ### Contributors
 
 To see who is involved with this module, see the [GitHub list of contributors](https://github.com/millerjl1701/millerjl1701-samba/graphs/contributors) or the [CONTRIBUTORS document](CONTRIBUTORS).
+
+## Credits
+
+This module was inspired from the excellent design work of the [sgnl05/sgnl05-sssd](https://github.com/sgnl05/sgnl05-sssd) puppet module. I loved how I could use it to specify a configuration file at will without having to wrangle parameterized classes for management of sssd. As that modules does, I used the sssd.conf template from [walkamongus/sssd](https://github.com/walkamongus/sssd) to generate concat fragments which then are assembled into the final samba configuration file.

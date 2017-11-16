@@ -1,8 +1,8 @@
 {
   "name": "millerjl1701-samba",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "author": "millerjl1701",
-  "summary": "Unopinionated puppet module for configuring samba.",
+  "summary": "Puppet module for configuring samba.",
   "license": "Apache-2.0",
   "source": "https://github.com/millerjl1701/millerjl1701-samba",
   "project_page": "https://github.com/millerjl1701/millerjl1701-samba",

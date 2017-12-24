@@ -26,3 +26,4 @@ vendor/
 .yardwarns
 *.iml
 .*.sw?
+*~

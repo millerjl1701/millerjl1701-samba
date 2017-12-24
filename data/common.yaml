@@ -4,6 +4,10 @@ lookup_options:
   samba::shares_definitions:
     merge: hash
 
+samba::config_dir: '/etc/samba'
+samba::config_file: 'smb.conf'
+samba::global_config: {}
+samba::global_config_template: 'samba/global.erb'
 samba::package_ensure: 'present'
 samba::package_name: 'samba'
 samba::service_nmb_enable: false
@@ -12,3 +16,5 @@ samba::service_nmb_name: 'nmb'
 samba::service_smb_enable: true
 samba::service_smb_ensure: 'running'
 samba::service_smb_name: 'smb'
+samba::shares_definitions: {}
+samba::shares_template: 'samba/shares.erb'

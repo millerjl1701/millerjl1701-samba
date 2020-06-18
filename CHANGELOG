@@ -1,3 +1,7 @@
+2020-06-18 Release 1.1.0
+- Add Puppet 6 support
+- Convert to pdk v1.18.0
+
 2017-11-16 Release 1.0.2
 - Removed shares.pp manifest that was unused and updated documentation to reflect.
 

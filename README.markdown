@@ -274,7 +274,7 @@ results in:
 
 ```puppet
 class { 'samba':
-  share_definitions => {
+  shares_definitions => {
     'admin' => {
       'comment'     => 'Admin Stuff',
       'path'        => '/mnt/stuff',
@@ -325,3 +325,4 @@ To see who is involved with this module, see the [GitHub list of contributors](h
 ## Credits
 
 This module was inspired from the excellent design work of the [sgnl05/sgnl05-sssd](https://github.com/sgnl05/sgnl05-sssd) puppet module. I loved how I could use it to specify a configuration file at will without having to wrangle parameterized classes for management of sssd. As that modules does, I used the sssd.conf template from [walkamongus/sssd](https://github.com/walkamongus/sssd) to generate concat fragments which then are assembled into the final samba configuration file.
+

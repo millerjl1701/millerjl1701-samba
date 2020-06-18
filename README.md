@@ -314,9 +314,20 @@ No validation or testing of the resulting /etc/samba/smb.conf file is done. This
 
 ## Development
 
-Please see the [CONTRIBUTING document](CONTRIBUTING.md) for information on how to get started developing code and submit a pull request for this module. While written in an opinionated fashion at the start, over time this can become less and less the case.
+This module has been converted over to using the [Puppet Development Kit](https://puppet.com/docs/pdk/1.x/pdk.html) from a legacy Gemfile setup. Prior to submitting a pull request, run the `pdk validate` command to ensure that the metadata and puppet manifests are of correct syntax. To specify a specific version of puppet to validate sysntax, run the command `pdk validate --puppet-version 5.5.12` which would validate against Puppet 5.5.12.
 
-There are many good modules to manage samba and winbind already; however, to me it seems they try to do too much. The design philosophy of this module is to keep things as simple as possible while being functional. If you need more added functionality that they provide, by all means do so.
+All new code should have unit tests using rspec-puppet in the `spec/classes` directory. Once written, the `pdk test unit` command compiles catalogs for all supported operating systems ensuring that all resources are present in the catalog according the the unit test requirements.
+
+All new functionality should have acceptance tests written using ServerSpec. Beaker is used as the test harness to provision a virtual machine, install puppet, and then configure the virtual machine with the module. If you have vagrant installed, the commands that you would use to run acceptance tests would be:
+
+```bash
+BEAKER_PUPPET_COLLECTION=puppet5 pdk bundle exec rake beaker
+BEAKER_destroy=no BEAKER_PUPPET_COLLECTION=puppet5 pdk bundle exec rake beaker
+BEAKER_provision=no BEAKER_destroy=no BEAKER_PUPPET_COLLECTION=puppet5 pdk bundle exec rake beaker
+BEAKER_PUPPET_COLLECTION=puppet5 BEAKER_set=centos-6-x64 pdk bundle exec rake beaker
+```
+
+The first command runs acceptance tests against the default node set using the puppet5 collection. The second command add `BEAKER_destroy=no` to prevent the virtual machine from being destroyed at the end of the run in order to inspect the actual virtual machine. The third command allows you rerun the acceptance tests against the virtual machine without reprovisioning. The last command adds `BEAKER_set` to change the nodeset away from default to allow for testing other operating systems.
 
 ### Contributors
 
